@@ -1,23 +1,30 @@
 import React from 'react';
 import type { Image } from '../types/image';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 
 
 interface ImageItemProps {
     image: Image;
     isFeatured?: boolean;
     onDelete: (id: string) => void;
-    onDragStart: (id:string) => void;
-    onDragOver: (event: React.DragEvent<HTMLElement>) => void;
-    onDrop: (id:string) => void;
 }
 
-export default function ImageItem({ image, isFeatured = false, onDelete, onDragStart, onDragOver, onDrop }: ImageItemProps) {
+export default function ImageItem({ image, isFeatured = false, onDelete }: ImageItemProps) {
+    const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: image.id });
+    
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+    }
+
     return (
         <article
+            ref={setNodeRef}
+            style={style}
+            {...attributes}
+            {...listeners}
             draggable
-            onDragStart={() => onDragStart(image.id)}
-            onDragOver={onDragOver}
-            onDrop={() => onDrop(image.id)}
             className={`
                 relative overflow-hidden rounded-xl bg-white shadow
                 ${isFeatured ? 'md:col-span-2 md:row-span-2' : ''}`
