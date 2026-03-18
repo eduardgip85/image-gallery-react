@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Image } from '../types/image';
 
 
@@ -5,11 +6,18 @@ interface ImageItemProps {
     image: Image;
     isFeatured?: boolean;
     onDelete: (id: string) => void;
+    onDragStart: (id:string) => void;
+    onDragOver: (event: React.DragEvent<HTMLElement>) => void;
+    onDrop: (id:string) => void;
 }
 
-export default function ImageItem({ image, isFeatured = false, onDelete }: ImageItemProps) {
+export default function ImageItem({ image, isFeatured = false, onDelete, onDragStart, onDragOver, onDrop }: ImageItemProps) {
     return (
         <article
+            draggable
+            onDragStart={() => onDragStart(image.id)}
+            onDragOver={onDragOver}
+            onDrop={() => onDrop(image.id)}
             className={`
                 relative overflow-hidden rounded-xl bg-white shadow
                 ${isFeatured ? 'md:col-span-2 md:row-span-2' : ''}`
