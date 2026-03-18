@@ -19,10 +19,10 @@ export default function Gallery() {
     const [images] = useState<Image[]>(initialImages);
 
     return (
-        <section>
-            <h1>Image Gallery</h1>
+        <section className='mx-auto max-w-6xl p-4'>
+            <h1 className='mb-6 text-3xl font-bold'>Image Gallery</h1>
 
-            <div className="gallery-grid">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
                 {images.map((img,index) => (
                     <ImageItem 
                         key={img.id} 
