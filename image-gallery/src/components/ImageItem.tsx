@@ -4,13 +4,14 @@ import type { Image } from '../types/image';
 interface ImageItemProps {
     image: Image;
     isFeatured?: boolean;
+    onDelete: (id: string) => void;
 }
 
-export default function ImageItem({ image, isFeatured = false }: ImageItemProps) {
+export default function ImageItem({ image, isFeatured = false, onDelete }: ImageItemProps) {
     return (
         <article
             className={`
-                overflow-hidden rounded-xl bg-white shadow
+                relative overflow-hidden rounded-xl bg-white shadow
                 ${isFeatured ? 'md:col-span-2 md:row-span-2' : ''}`
             }
         >   
@@ -19,6 +20,13 @@ export default function ImageItem({ image, isFeatured = false }: ImageItemProps)
                 alt={image.alt} 
                 className='h-full w-full object-cover transition-transform duration-300 hover:scale-105'
             />
+            <button
+                type='button' 
+                onClick={(event) =>{event.stopPropagation(); onDelete(image.id)}}
+                className='absolute top-2 right-2 z-10 rounded-full bg-red-500 px-3 text-lg'
+            >
+                Delete
+            </button>
         </article>
         
     );

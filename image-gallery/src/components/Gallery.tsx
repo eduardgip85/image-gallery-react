@@ -16,11 +16,17 @@ const initialImages: Image[] = [
 
 export default function Gallery() {
     
-    const [images] = useState<Image[]>(initialImages);
+    const [images,setImages] = useState<Image[]>(initialImages);
+
+    const handleDelete = (id: string) => {
+        const confirmed = window.confirm('Are you sure you want to delete this image?');
+        if (!confirmed) return;
+        setImages((prevImages) => prevImages.filter((img) => img.id !== id));
+    };
 
     return (
         <section className='mx-auto max-w-6xl p-4'>
-            <h1 className='mb-6 text-3xl font-bold'>Image Gallery</h1>
+            <h1 className='mb-6 text-3xl font-bold text-center'>Image Gallery</h1>
 
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-5">
                 {images.map((img,index) => (
@@ -28,6 +34,7 @@ export default function Gallery() {
                         key={img.id} 
                         image={img} 
                         isFeatured={index === 0} 
+                        onDelete={handleDelete}
                         />
                 ))}
             </div>
