@@ -54,7 +54,14 @@ export default function Gallery() {
                     items={images.map((img) => img.id)}
                     strategy={rectSortingStrategy}
                 >   
-                    <div className="gallery-grid">
+                    <div 
+                    role='list'
+                    aria-label="Image gallery"
+                    className="grid gap-4
+                                    grid-cols-2
+                                    md:grid-cols-4
+                                    lg:grid-cols-5
+                                    auto-rows-[150px]">
                         {images.map((img,index) => (
                             <ImageItem 
                                 key={img.id}
